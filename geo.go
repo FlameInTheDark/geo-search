@@ -2,10 +2,11 @@ package geo_search
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/pkg/errors"
 )
 
 const (
@@ -34,7 +35,7 @@ func New(username, lang string, rows int, timeout time.Duration) *Client {
 func (c *Client) Search(query string) ([]GeoData, error) {
 	escaped := url.QueryEscape(query)
 	cl := makeClient(c.timeout)
-	resp, err := cl.Get(baseURL + fmt.Sprintf("q=%s&maxRows=%d&lang=%s", escaped, c.maxRows, c.language))
+	resp, err := cl.Get(baseURL + fmt.Sprintf("q=%s&maxRows=%d&lang=%s&username=%s", escaped, c.maxRows, c.language, c.username))
 	if err != nil {
 		return nil, errors.Wrap(err, "http request error")
 	}
@@ -49,7 +50,7 @@ func (c *Client) Search(query string) ([]GeoData, error) {
 func (c *Client) ByName(name string) ([]GeoData, error) {
 	escaped := url.QueryEscape(name)
 	cl := makeClient(c.timeout)
-	resp, err := cl.Get(baseURL + fmt.Sprintf("name=%s&maxRows=%d&lang=%s", escaped, c.maxRows, c.language))
+	resp, err := cl.Get(baseURL + fmt.Sprintf("name=%s&maxRows=%d&lang=%s&username=%s", escaped, c.maxRows, c.language, c.username))
 	if err != nil {
 		return nil, errors.Wrap(err, "http request error")
 	}
@@ -64,7 +65,7 @@ func (c *Client) ByName(name string) ([]GeoData, error) {
 func (c *Client) ByNameEquals(name string) ([]GeoData, error) {
 	escaped := url.QueryEscape(name)
 	cl := makeClient(c.timeout)
-	resp, err := cl.Get(baseURL + fmt.Sprintf("name_equals=%s&maxRows=%d&lang=%s", escaped, c.maxRows, c.language))
+	resp, err := cl.Get(baseURL + fmt.Sprintf("name_equals=%s&maxRows=%d&lang=%s&username=%s", escaped, c.maxRows, c.language, c.username))
 	if err != nil {
 		return nil, errors.Wrap(err, "http request error")
 	}
