@@ -11,9 +11,9 @@ Usage:
 package main
 
 import (
+    "time"
 
-gs "github.com/FlameInTheDark/geo-search"
-"time"
+    gs "github.com/FlameInTheDark/geo-search"
 )
 
 func main() {
